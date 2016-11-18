@@ -1,4 +1,4 @@
-import {Types} from '../../constants/base/user';
+import {Types} from '../constants/base/user';
 
 import objectAssign from 'object-assign';
 
