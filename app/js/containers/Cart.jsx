@@ -1,13 +1,30 @@
 import React, {PropTypes} from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
 import App from '../components/App';
 import Cart from '../components/Cart';
 
-import * as Actions from '../actions/cart';
+var store = require('../store');
+var actions = require('../actions');
+
+var noop = function() {};
+var DefaultUserMixin = {
+  getInitialState: function() {
+    return {
+      loading: 0,
+      user: {
+        name: 'spence'
+      }
+    };
+  },
+  // getDefaultProps: function() {
+  //   actions:{
+  //
+  //   }
+  // }
+};
 
 var Content = React.createClass({
+  mixins: [DefaultUserMixin],
   propTypes: {
     actions: PropTypes.shape({
       fetchCart: PropTypes.func,
@@ -18,43 +35,43 @@ var Content = React.createClass({
       showPanel: PropTypes.func
     }).isRequired
   },
-
-  componentDidMount: function() {
-    this.props.actions.fetchUser();
-    this.props.actions.fetchCart();
+  getDefaultProps: function() {
+    return {
+      actions: actions
+    };
   },
-
+  getInitialState: function() {
+    return store.getAll();
+  },
+  componentDidMount: function() {
+    store.addChangeListener(this._onChange);
+    actions.fetchCart();
+  },
+  componentWillUnmount: function() {
+    store.removeChangeListener(this._onChange);
+  },
+  _onChange: function() {
+    this.setState(store.getAll());
+  },
   render: function() {
     var totalPrice = 0;
     var totalCount = 0;
     var props = this.props;
+    var state = this.state;
 
-    props.carts.map(function(item) {
-      // totalPrice += (item.price * 100 * item.count) / 100;
+    state.carts.map(function(item) {
       totalCount += parseInt(item.count, 10);
     });
 
     return (
-        <App user={props.user} loading={props.loading}>
 
-          <Cart {...props} totalCount={totalCount}/>
+        <App user={state.user} loading={state.loading}>
+
+          <Cart actions={props.actions} {...state}   totalCount={totalCount}/>
 
         </App>
     );
   }
 });
 
-function mapStateToProps(state) {
-  return state;
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(Actions, dispatch)
-  };
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Content);
+export default Content;

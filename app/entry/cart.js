@@ -1,15 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Provider } from 'react-redux';
 
-import Container from '../js/containers/Cart';
-import Store from '../js/stores/cart';
+import Cart from '../js/containers/Cart';
 
 require('../css/common.css');
 
-const store = Store();
-
-render(
-    <Provider store={store}>
-      <Container />
-    </Provider>, document.getElementById('app'));
+render(<Cart />, document.getElementById('app'));

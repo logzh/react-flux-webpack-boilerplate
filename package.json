@@ -22,6 +22,7 @@
     "axios": "^0.15.2",
     "classnames": "^2.2.5",
     "cookie": "^0.3.1",
+    "es6-promise": "^4.0.5",
     "events": "^1.1.1",
     "flux": "^3.1.0",
     "lodash": "^4.16.2",
