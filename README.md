@@ -1,4 +1,4 @@
-react-redux-webpack-boilerplate，redux + redux类前端项目模版
+react-flux-webpack-boilerplate，redux + flux 前端项目模版
 
 ## 使用
 
