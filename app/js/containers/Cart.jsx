@@ -59,16 +59,14 @@ var Content = React.createClass({
     var props = this.props;
     var state = this.state;
 
+    console.log(state)
     state.carts.map(function(item) {
       totalCount += parseInt(item.count, 10);
     });
 
     return (
-
         <App user={state.user} loading={state.loading}>
-
           <Cart actions={props.actions} {...state}   totalCount={totalCount}/>
-
         </App>
     );
   }
