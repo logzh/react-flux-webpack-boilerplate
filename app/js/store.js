@@ -1,3 +1,5 @@
+// 数据与逻辑
+
 var Dispatcher = require('./dispatcher');
 var EventEmitter = require('events').EventEmitter;
 var types = require('./constants');

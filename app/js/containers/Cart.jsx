@@ -5,7 +5,7 @@ import Cart from '../components/Cart';
 
 var store = require('../store');
 var actions = require('../actions');
-
+console.log(actions)
 var noop = function() {};
 var DefaultUserMixin = {
   getInitialState: function() {
