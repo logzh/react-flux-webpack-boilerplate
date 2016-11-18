@@ -3,28 +3,11 @@ import React, {PropTypes} from 'react';
 import App from '../components/App';
 import Cart from '../components/Cart';
 
-var store = require('../store');
-var actions = require('../actions');
-console.log(actions)
-var noop = function() {};
-var DefaultUserMixin = {
-  getInitialState: function() {
-    return {
-      loading: 0,
-      user: {
-        name: 'spence'
-      }
-    };
-  },
-  // getDefaultProps: function() {
-  //   actions:{
-  //
-  //   }
-  // }
-};
+var store = require('../store/cart');
+var actions = require('../actions/cart');
 
 var Content = React.createClass({
-  mixins: [DefaultUserMixin],
+  // mixins: [DefaultUserMixin],
   propTypes: {
     actions: PropTypes.shape({
       fetchCart: PropTypes.func,
@@ -59,16 +42,11 @@ var Content = React.createClass({
     var props = this.props;
     var state = this.state;
 
-    console.log(state)
     state.carts.map(function(item) {
       totalCount += parseInt(item.count, 10);
     });
 
-    return (
-        <App user={state.user} loading={state.loading}>
-          <Cart actions={props.actions} {...state}   totalCount={totalCount}/>
-        </App>
-    );
+    return <Cart actions={props.actions} {...state}   totalCount={totalCount}/>;
   }
 });
 

@@ -14,6 +14,12 @@ var dev = [
     filename: 'cart.html',
     template: devTemplate,
     chunks: ['vendor', 'cart']
+  },
+  {
+    title: 'cart multiple store',
+    filename: 'cart-multiple-store.html',
+    template: devTemplate,
+    chunks: ['vendor', 'cart-multiple-store']
   }
 ];
 

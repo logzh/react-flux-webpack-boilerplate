@@ -1,71 +1,58 @@
-import {Types} from '../constants/cart';
+var Dispatcher = require('../dispatcher');
 
-export * from './base/user';
+var types = require('../constants/cart');
+var service = require('../service');
 
-export function increaseCount(item) {
-  var {id, sizeId, count} = item;
+var Actions = {
+  fetchCart: function() {
+    service.fetchCart().then(function(res) {
+      Dispatcher.dispatch({ //Dispatcher分发一个事件，Store将会监听到
+        type: types.GET_SERVER_CARTS,
+        data: res
+      });
+    });
+  },
+  increaseCount:function(data) {
+    service.increaseCount(data).then(function(res) {
+      Dispatcher.dispatch({
+        type: types.CART_INC_COUNT,
+        data: res,
+        meta:data
+      });
+    });
+  },
+  decreaseCount:function(data) {
+    service.decreaseCount(data).then(function(res) {
+      Dispatcher.dispatch({
+        type: types.CART_DES_COUNT,
+        data: res,
+        meta:data
+      });
+    });
+  },
+  updateCount:function(data) {
+    service.updateCount(data).then(function(res) {
+      Dispatcher.dispatch({
+        type: types.CART_UPDATE_COUNT,
+        data: res,
+        meta:data
+      });
+    });
+  },
+  deleteItem:function(data) {
+    service.deleteItem(data).then(function(res) {
+      Dispatcher.dispatch({
+        type: types.CART_DEL_ITEM,
+        data: res,
+        meta:data
+      });
+    });
+  },
+  switchPanel:function() {
+    Dispatcher.dispatch({
+      type: types.SWITCH_PANEL
+    });
+  }
+};
 
-  return {
-    url: `/mall/cart/${id}`,
-    data: {count: count + 1, sizeId},
-    method: 'PUT',
-    type: Types.CART_INC_COUNT
-  };
-}
-
-export function decreaseCount(item) {
-  var {id, sizeId, count} = item;
-
-  return {
-    url: `/mall/cart/${id}`,
-    data: {count: count - 1, sizeId},
-    method: 'PUT',
-    type: Types.CART_DES_COUNT
-  };
-}
-
-export function updateCount(data) {
-  var {id, sizeId, count} = data;
-
-  return {
-    url: `/mall/cart/${id}`,
-    data: {count: count, sizeId},
-    method: 'PUT',
-    type: Types.CART_UPDATE_COUNT
-  };
-}
-
-export function deleteItem(item) {
-  var {id, sizeId} = item;
-
-  return {
-    url: `/mall/cart/${id}`,
-    data: {sizeId},
-    method: 'DELETE',
-    type: Types.CART_DEL_ITEM
-  };
-
-}
-
-export function fetchCart() {
-  return {
-    url: '/mall/cart',
-    method: 'GET',
-    type: Types.GET_SERVER_CARTS
-  };
-}
-
-export function addCart(goods) {
-  var {sizeId, name, price, thumb, sizeName, regularPrice} = goods;
-
-  return {
-    url: '/mall/cart',
-    method: 'POST',
-    data: {goodsId: goods.id, sizeId},
-    type: Types.ADD_SERVER_CART
-  };
-}
-
-export function switchPanel(payload) {
-  return {type: Types.SWITCH_PANEL, payload};
-}
+module.exports = Actions;

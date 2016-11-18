@@ -1,7 +1,6 @@
 const Types = {
-  LOCAL_USER: 'LOCAL_USER',
-  LOGIN_USER: 'LOGIN_USER'
+  FETCH_USER: 'FETCH_USER'
 };
 
-export {Types};
+module.exports = Types;
 

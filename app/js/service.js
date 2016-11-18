@@ -3,6 +3,13 @@ var http = require('./http');
 const service = {};
 module.exports = service
 
+service.fetchUser = function() {
+  return http({
+    url: '/user/info',
+    method: 'GET'
+  });
+};
+
 service.fetchCart = function() {
   return http({
     url: '/mall/cart',
