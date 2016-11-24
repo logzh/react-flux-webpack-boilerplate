@@ -2,7 +2,6 @@ var Dispatcher = require('../dispatcher');
 var EventEmitter = require('events').EventEmitter;
 var types = require('../constants/user');
 var objectAssign = require('object-assign');
-var service = require('../service');
 var CHANGE_EVENT = 'change';
 
 var user = {isLoginEd: false};
